@@ -17,6 +17,7 @@ from student_with_selected_course
 where student_dept not like '%研究所' and student_dept not like '%碩士班';
 
 
+/*
 select c.course_arrangement_id,c.student_id,course_score
 from master_student_with_selected_course as c
 join course_score as cs
@@ -28,6 +29,26 @@ from college_student_with_selected_course as c
 join course_score as cs
 on c.course_arrangement_id = cs.course_arrangement_id and c.student_id = cs.student_id
 where course_score >= 60;
+*/
+
+SELECT 
+    c.course_arrangement_id,
+    count(*) AS total_students,
+    SUM(CASE WHEN cs.course_score < 70 THEN 1 ELSE 0 END) AS failed_students
+from master_student_with_selected_course AS c
+join course_score as cs
+on c.course_arrangement_id = cs.course_arrangement_id AND c.student_id = cs.student_id
+group by c.course_arrangement_id;
+
+SELECT 
+    c.course_arrangement_id,
+    count(*) AS total_students,
+    SUM(CASE WHEN cs.course_score < 70 THEN 1 ELSE 0 END) AS failed_students
+from college_student_with_selected_course AS c
+join course_score as cs
+on c.course_arrangement_id = cs.course_arrangement_id AND c.student_id = cs.student_id
+group by c.course_arrangement_id;
+
 
 drop view student_with_selected_course;
 drop view master_student_with_selected_course;
