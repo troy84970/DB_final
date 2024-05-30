@@ -3,7 +3,7 @@ select e.course_arrangement_id,e.student_id,student_name,student_dept,e.select_r
 from enrollment as e
 	join student as s
 	on e.student_id = s.student_id
-where e.select_result = '中選';
+where e.select_result <> '落選';
 
 -- 研究所 or 碩士班 為結尾 是 碩士
 create view master_student_with_selected_course as
