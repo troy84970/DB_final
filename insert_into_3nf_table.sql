@@ -17,14 +17,24 @@ FROM one_nf_course_data;
 INSERT INTO curriculum_field (curriculum_field, course_no)
 SELECT DISTINCT o.curriculum_field, o.course_no
 FROM one_nf_course_data o;
-
+-- error distinct pair
 INSERT INTO course_score (student_id, course_arrangement_id, course_score)
 SELECT s.student_id, ca.arrangement_id, o.course_score
 FROM student s
 JOIN one_nf_course_data o ON o.student_name = s.student_name
+JOIN course_arrangement ca ON ca.course_no = o.course_no
+union
+SELECT s.student_id, ca.arrangement_id, o.course_score
+FROM student s
+JOIN one_nf_course_data o ON o.student_name = s.student_name
 JOIN course_arrangement ca ON ca.course_no = o.course_no;
-
+ 
 INSERT INTO course_feedback (student_id, course_arrangement_id, feedback_rank)
+SELECT s.student_id, ca.arrangement_id, o.feedback_rank
+FROM student s
+JOIN one_nf_course_data o ON o.student_name = s.student_name
+JOIN course_arrangement ca ON ca.course_no = o.course_no
+union
 SELECT s.student_id, ca.arrangement_id, o.feedback_rank
 FROM student s
 JOIN one_nf_course_data o ON o.student_name = s.student_name
@@ -34,7 +44,13 @@ INSERT INTO enrollment (student_id, course_arrangement_id, select_result)
 SELECT s.student_id, ca.arrangement_id, o.select_result
 FROM student s
 JOIN one_nf_course_data o ON o.student_name = s.student_name
+JOIN course_arrangement ca ON ca.course_no = o.course_no
+union
+SELECT s.student_id, ca.arrangement_id, o.select_result
+FROM student s
+JOIN one_nf_course_data o ON o.student_name = s.student_name
 JOIN course_arrangement ca ON ca.course_no = o.course_no;
+
 
 INSERT INTO room_information (course_room, course_building)
 SELECT DISTINCT course_room, course_building
@@ -44,8 +60,12 @@ INSERT INTO teach (teacher_id, course_arrangement_id)
 SELECT t.teacher_id, ca.arrangement_id
 FROM teacher t
 JOIN one_nf_course_data o ON o.teacher_name = t.teacher_name
+JOIN course_arrangement ca ON ca.course_no = o.course_no
+union
+SELECT t.teacher_id, ca.arrangement_id
+FROM teacher t
+JOIN one_nf_course_data o ON o.teacher_name = t.teacher_name
 JOIN course_arrangement ca ON ca.course_no = o.course_no;
-
 
 
 
