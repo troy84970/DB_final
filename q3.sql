@@ -71,7 +71,7 @@ from (
     (select
         c2.course_arrangement_id,
         COUNT(*) AS total_students,
-        SUM(CASE WHEN cs2.course_score < 70 THEN 1 ELSE 0 END) AS failed_students
+        SUM(CASE WHEN cs2.course_score < 60 THEN 1 ELSE 0 END) AS failed_students
     from college_student_with_selected_course AS c2
     join course_score AS cs2 ON c2.course_arrangement_id = cs2.course_arrangement_id AND c2.student_id = cs2.student_id
     group by c2.course_arrangement_id)
