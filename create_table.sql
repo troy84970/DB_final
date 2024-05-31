@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS course (
     course_credit INT,
 	primary key (course_no)
 );
+CREATE TABLE IF NOT EXISTS room_information (
+    course_room VARCHAR(20),
+    course_building VARCHAR(20),
+    primary key (course_room)
+);
 CREATE TABLE IF NOT EXISTS course_arrangement (
     arrangement_id INTEGER AUTO_INCREMENT,
     course_no VARCHAR(10),
@@ -29,7 +34,7 @@ CREATE TABLE IF NOT EXISTS course_arrangement (
     course_status VARCHAR(10),
     primary key (arrangement_id),
     foreign key (course_no) references course (course_no),
-    index (course_room)
+    foreign key (course_room) references room_information (course_room)
 );
 CREATE TABLE IF NOT EXISTS teach (
     teacher_id INTEGER,
@@ -43,12 +48,6 @@ CREATE TABLE IF NOT EXISTS curriculum_field (
     course_no VARCHAR(10),
     primary key (curriculum_field,course_no),
     foreign key (course_no) references course (course_no)
-);
-CREATE TABLE IF NOT EXISTS room_information (
-    course_room VARCHAR(20),
-    course_building VARCHAR(20),
-    primary key (course_room),
-    foreign key (course_room) references course_arrangement (course_room)
 );
 CREATE TABLE IF NOT EXISTS enrollment (
     student_id INT,

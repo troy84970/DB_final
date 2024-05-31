@@ -10,6 +10,10 @@ INSERT INTO teacher (teacher_name)
 SELECT DISTINCT teacher_name
 FROM one_nf_course_data;
 
+INSERT INTO room_information (course_room, course_building)
+SELECT DISTINCT course_room, course_building
+FROM one_nf_course_data;
+
 INSERT INTO course_arrangement (course_no, semester, course_room, course_time, course_limit, course_status)
 SELECT DISTINCT course_no, semester, course_room, course_time, course_limit, course_status
 FROM one_nf_course_data;
@@ -17,7 +21,7 @@ FROM one_nf_course_data;
 INSERT INTO curriculum_field (curriculum_field, course_no)
 SELECT DISTINCT o.curriculum_field, o.course_no
 FROM one_nf_course_data o;
--- error distinct pair
+
 INSERT INTO course_score (student_id, course_arrangement_id, course_score)
 SELECT s.student_id, ca.arrangement_id, o.course_score
 FROM student s
@@ -50,11 +54,6 @@ SELECT s.student_id, ca.arrangement_id, o.select_result
 FROM student s
 JOIN one_nf_course_data o ON o.student_name = s.student_name
 JOIN course_arrangement ca ON ca.course_no = o.course_no;
-
-
-INSERT INTO room_information (course_room, course_building)
-SELECT DISTINCT course_room, course_building
-FROM one_nf_course_data;
 
 INSERT INTO teach (teacher_id, course_arrangement_id)
 SELECT t.teacher_id, ca.arrangement_id
