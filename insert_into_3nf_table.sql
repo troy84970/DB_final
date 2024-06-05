@@ -2,6 +2,14 @@ INSERT INTO course (course_no, course_name, course_type, course_credit)
 SELECT DISTINCT course_no, course_name, course_type, course_credit
 FROM one_nf_course_data;
 
+INSERT INTO department_degree (dept,degree)
+select distinct student_dept, 
+	case
+		when student_dept like '%研究所' or student_dept like '%碩士班' then '碩士'
+		else '學士'
+	end as degree
+from one_nf_course_data;
+
 INSERT INTO student (student_name, student_dept, student_grade, student_status, student_class)
 SELECT DISTINCT student_name, student_dept, student_grade, student_status, student_class
 FROM one_nf_course_data;

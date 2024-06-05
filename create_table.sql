@@ -1,3 +1,8 @@
+CREATE TABLE IF NOT EXISTS department_degree (
+    dept VARCHAR(30),
+    degree VARCHAR(20),
+    primary key (dept)
+);
 create table IF NOT EXISTS student(
     student_id INTEGER AUTO_INCREMENT,
     student_name VARCHAR(20),
@@ -5,7 +10,8 @@ create table IF NOT EXISTS student(
     student_grade INTEGER,
     student_status VARCHAR(10),
     student_class VARCHAR(1),
-    primary key (student_id)
+    primary key (student_id),
+    foreign key (student_dept) references department_degree (dept)
 );
 CREATE TABLE IF NOT EXISTS teacher (
     teacher_id INTEGER AUTO_INCREMENT,

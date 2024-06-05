@@ -27,7 +27,7 @@ with student_failing_course as(
 
 # select * from student_failing_course;
 
-select course_name,group_concat(teacher_name),failed_students,total_students,failure_rate
+select course_name,group_concat(teacher_name) as teacher_name,failed_students,total_students,failure_rate
 from(select course_name,
 		   teacher_name,
 		   (sfc.failed_master_students+sfc.failed_college_students) as failed_students,
