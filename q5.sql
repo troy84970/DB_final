@@ -5,7 +5,7 @@ with course_feedback_analyze as (
 		join student as s on s.student_id = e.student_id
 		join course as c on c.course_no = ca.course_no
 		join course_feedback as cf on cf.student_id = s.student_id and cf.course_arrangement_id = ca.arrangement_id
-	where (e.select_result = '中選'or e.select_result = '人工加選') and s.student_status = '在學'
+	where e.select_result <> '落選' and s.student_status = '在學'
 	group by c.course_no,ca.arrangement_id
 )
 select course_no,course_name,group_concat(teacher_name) as teacher_name,total_feedback,avg_feedback
