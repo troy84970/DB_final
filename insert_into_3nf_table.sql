@@ -74,7 +74,9 @@ FROM teacher t
 JOIN one_nf_course_data o ON o.teacher_name = t.teacher_name
 JOIN course_arrangement ca ON ca.course_no = o.course_no;
 
-
-
+drop table tmp_course_data_teacher_field_ll;
+drop table tmp_course_data_teacher_field_lr;
+drop table tmp_course_data_teacher_field_rl;
+drop table tmp_course_data_teacher_field_rr;
 
 

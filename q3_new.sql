@@ -3,15 +3,13 @@ with student_failing_course as(
 			ca.course_no,
 		sum(
 			case 
-				when (s.student_dept like '%研究所' or s.student_dept like '%碩士班') and  cs.course_score < 70 
-				then 1
+				when (s.student_dept IN (select dept from department_degree where degree = '碩士')) and  cs.course_score < 70 then 1
 				else 0
 			end
         ) as failed_master_students,
 		sum(
 			case 
-				when (s.student_dept not like '%研究所' and s.student_dept not like '%碩士班') and  cs.course_score < 60 
-				then 1
+				when (s.student_dept IN (select dept from department_degree where degree = '學士')) and  cs.course_score < 60 then 1
 				else 0
 			end
         ) as failed_college_students,
@@ -20,7 +18,6 @@ with student_failing_course as(
 		join student as s on e.student_id = s.student_id
 		join course_arrangement as ca on ca.arrangement_id = e.course_arrangement_id
 		join course_score  as cs on e.course_arrangement_id = cs.course_arrangement_id and e.student_id = cs.student_id
-        
 	where e.select_result <> '落選'
     group by ca.arrangement_id
 )
