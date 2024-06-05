@@ -18,7 +18,7 @@ with student_failing_course as(
 		join student as s on e.student_id = s.student_id
 		join course_arrangement as ca on ca.arrangement_id = e.course_arrangement_id
 		join course_score  as cs on e.course_arrangement_id = cs.course_arrangement_id and e.student_id = cs.student_id
-	where e.select_result <> '落選'
+	where e.select_result <> '落選' and s.student_status = '在學'
     group by ca.arrangement_id
 )
 
