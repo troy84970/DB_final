@@ -11,3 +11,4 @@ with count_of_dept_and_field as(
 )
 select c.dept,c.field,c.count as 'person-time' ,concat(c.count/c.total*100,'%' ) as proportion
 from count_of_dept_and_field as c
+order by c.dept, cast(replace(proportion,'%','') as FLOAT) desc;
